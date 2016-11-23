@@ -11,11 +11,17 @@
 magazine = %w(give me one grand today night)
 ransom = %w(give one grand today)
 
-require 'set'
-
 def solution(m, r)
-  return 'No' unless Set.new(r) < Set.new(m)
-  r.uniq.map { |e| r.count(e) <= m.count(e) }.include?(false) ? 'No' : 'Yes'
+  r.sort!
+  m.sort!
+
+  until r.empty?
+    i = m.index(r[0])
+    return 'No' if i.nil?
+    r.delete_at(0)
+    m.delete_at(i)
+  end
+  'Yes'
 end
 
 puts solution(magazine, ransom)
