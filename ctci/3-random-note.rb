@@ -11,9 +11,11 @@
 magazine = %w(give me one grand today night)
 ransom = %w(give one grand today)
 
+require 'set'
+
 def solution(m, r)
-  intersection_with_repetition = (m | r).flat_map { |e| [e] * [m.count(e), r.count(e)].min }
-  r == intersection_with_repetition ? 'Yes' : 'No'
+  return 'No' unless Set.new(r) < Set.new(m)
+  r.uniq.map { |e| r.count(e) <= m.count(e) }.include?(false) ? 'No' : 'Yes'
 end
 
 puts solution(magazine, ransom)
